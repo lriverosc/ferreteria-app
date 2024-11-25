@@ -1,0 +1,91 @@
+3:06 24-11-2024
+
+---
+
+   Historial de Implementaciones y Cambios del Sistema
+
+     1.   Inicialización y Estructura del Proyecto  
+   -   Descripción  : Se inició un sistema para la gestión de productos de una ferretería utilizando una base de datos SQLite.
+   -   Fecha  : (Fecha inicial de implementación).
+   -   Detalles  : 
+     - Estructura básica de formularios creada (Form1 y Form2).
+     - Se añadió un formulario para agregar productos con campos: nombre, precio, stock, y botones de acción (agregar, limpiar, salir).
+
+     2.   Conexión con la Base de Datos SQLite  
+   -   Descripción  : Se implementó la conexión a la base de datos SQLite, utilizando una cadena de conexión estática.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - Se definió una cadena de conexión estática a la base de datos (`ferreteria.db`).
+     - Inicialmente, se utilizó una ruta absoluta para la base de datos en el código.
+     -   Problema  : La ruta absoluta causó dependencia del entorno del sistema.
+     -   Solución  : Se propuso el uso de una ruta relativa para asegurar la portabilidad.
+
+     3.   Mejoras en la Cadena de Conexión - Uso de Ruta Relativa  
+   -   Descripción  : Se mejoró la forma en que se construye la cadena de conexión utilizando una ruta relativa para la base de datos.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - Se cambió el uso de la ruta absoluta por una ruta relativa utilizando `AppDomain.CurrentDomain.BaseDirectory`.
+     -   Código Implementado  :
+       ```csharp
+       string basePath = AppDomain.CurrentDomain.BaseDirectory;
+       string connectionString = $@"Data Source={Path.Combine(basePath, "ferreteria.db")};";
+       ```
+     - Esto permitió que el sistema sea más flexible y fácil de trasladar entre diferentes entornos sin la necesidad de modificar la ruta.
+
+     4.   Carga y Actualización de Productos en la Base de Datos  
+   -   Descripción  : Se añadió funcionalidad para agregar, actualizar y eliminar productos de la base de datos a través de formularios.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     -   Método `AddProduct`  : Se implementó un método en `DatabaseHelper` para agregar productos a la base de datos con validación.
+     -   Método `UpdateProduct`  : Se agregó la funcionalidad para actualizar los productos en la base de datos.
+     -   Método `DeleteProduct`  : Se agregó la funcionalidad para eliminar productos de la base de datos.
+     -   Formulario `Form2`  : Se utilizó para agregar nuevos productos, validando los campos antes de enviar a la base de datos.
+
+     5.   Validación de Campos y Manejo de Errores  
+   -   Descripción  : Se implementó la validación de campos de entrada en los formularios para garantizar que los datos sean correctos antes de enviarlos a la base de datos.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - Se validaron los campos de nombre, precio y stock antes de insertar o actualizar productos.
+     - Se implementó un control de errores con mensajes adecuados si los campos estaban vacíos o los datos no eran válidos.
+
+     6.   Refrescar la Vista de Productos en `Form1`  
+   -   Descripción  : Se implementó la función `RefrescarGrid()` en `Form1` para actualizar el `DataGridView` y reflejar los cambios realizados en la base de datos.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     -   Método `RefrescarGrid`  : Se utilizó para cargar todos los productos desde la base de datos y actualizar el `DataGridView`.
+     -   Consulta SQL  : La consulta SQL `SELECT * FROM Productos` se utilizó para recuperar todos los registros de productos.
+     -   Resultado  : Cada vez que se agregaban, actualizaban o eliminaban productos, se llamaba a este método para actualizar la vista.
+
+     7.   Funcionalidad de Agregar Producto en `Form1`  
+   -   Descripción  : Se implementó el botón `btn_agregar` en `Form1` para abrir `Form2` y agregar un nuevo producto a la base de datos.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - Se utilizó un método `btn_agregar_Click` que validaba los datos antes de enviarlos a la base de datos.
+     - Tras agregar el producto, se actualizaba el `DataGridView` de `Form1` llamando a `RefrescarGrid()`.
+
+     8.   Funcionalidad de Limpiar Campos en `Form2`  
+   -   Descripción  : Se implementó el botón `btn_limpiar` en `Form2` para limpiar los campos de texto (nombre, precio, stock) después de agregar un producto.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - El método `btn_limpiar_Click` se encargó de vaciar los campos de texto cuando el usuario lo solicitaba.
+
+     9.   Funcionalidad de Salir en `Form2`  
+   -   Descripción  : Se implementó el botón `btn_salir` en `Form2` para cerrar el formulario sin realizar cambios.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - El método `btn_salir_Click` cerraba el formulario sin guardar los datos.
+
+     10.   Notificación y Mensajes de Error  
+   -   Descripción  : Se implementaron mensajes de notificación al usuario para informar sobre el estado de las operaciones (producto agregado, errores en la entrada de datos, etc.).
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - Se utilizaron `MessageBox.Show` para mostrar mensajes de éxito o error según la operación realizada (por ejemplo, agregar producto, validar campos, etc.).
+
+     11.   Optimización de la Conexión a la Base de Datos  
+   -   Descripción  : Se optimizó el manejo de la conexión a la base de datos y se mejoró la seguridad de las cadenas de conexión.
+   -   Fecha  : (Fecha de implementación).
+   -   Detalles  :
+     - Se recomendó el uso de una cadena de conexión relativa para mejorar la portabilidad del proyecto.
+     - Además, se planificó mejorar la protección de la base de datos mediante el uso de credenciales y conexiones seguras en producción.
+
+---
